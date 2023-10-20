@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@drawable/bg_chat_ieft"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="6dp"
+        android:orientation="vertical"
+        android:gravity="end"
+        >
+
+    <EditText
+            android:id="@+id/tvMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#323232"
+            android:background="@null"
+            />
+
+    <EditText
+            android:id="@+id/tvHour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#757575"
+            android:background="@null"
+            />
+
+</LinearLayout>
