@@ -1,11 +1,14 @@
 package com.cours.etalonschat.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.cours.etalonschat.R
+import com.cours.etalonschat.activities.ChatActivity
 import com.cours.etalonschat.models.Friend
 import com.google.android.material.imageview.ShapeableImageView
 import java.text.SimpleDateFormat
@@ -45,6 +48,12 @@ class FriendsRecyclerAdapter:RecyclerView.Adapter<FriendsRecyclerAdapter.ViewHol
             tvLastMessage.text = friend.lastMessage
             val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
             tvHour.text = sdf.format(Date(friend.timestamp))
+
+            itemView.setOnClickListener{
+                Intent(itemView.context, ChatActivity::class.java).also {
+                    itemView.context.startActivity(it)
+                }
+            }
         }
     }
 }
