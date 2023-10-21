@@ -2,10 +2,12 @@ package com.cours.etalonschat.activities
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cours.etalonschat.R
@@ -30,6 +32,8 @@ class ChatActivity : AppCompatActivity() {
         editMessage = findViewById(R.id.editMessage)
         fabSendMessage = findViewById(R.id.fabSendMessage)
         chatRecyclerAdapter = ChatRecyclerAdapter()
+        val name = intent.getStringExtra("friend")
+        supportActionBar?.title = name ?: "etalonChat"
 
         val messages =  mutableListOf<Message>(
             Message(sender = "Edmond", receiver = "Bertrand Traore", text = "Salut", isReceived = false, timestamp = 12345789),
