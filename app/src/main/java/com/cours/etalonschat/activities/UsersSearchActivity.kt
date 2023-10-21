@@ -2,6 +2,8 @@ package com.cours.etalonschat.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,5 +42,17 @@ class UsersSearchActivity : AppCompatActivity() {
             adapter = userRecyclerAdapter
         }
         userRecyclerAdapter.items = users
+
+        editSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                userRecyclerAdapter.filter.filter(s.toString())
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
     }
 }
