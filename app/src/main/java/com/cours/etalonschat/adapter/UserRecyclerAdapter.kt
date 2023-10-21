@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cours.etalonschat.R
@@ -15,25 +17,51 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class UserRecyclerAdapter : RecyclerView.Adapter<UserRecyclerAdapter.ViewHolder>(){
+class UserRecyclerAdapter : RecyclerView.Adapter<UserRecyclerAdapter.ViewHolder>(), Filterable{
 
     var items : MutableList<User> = mutableListOf()
         set(value) {
             field = value
+            usersFilteredList = value
             notifyDataSetChanged()
         }
 
+    private var usersFilteredList: MutableList<User> = mutableListOf()
 
+    override fun getFilter(): Filter {
+        return object : Filter(){
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val  charSearch = constraint.toString()
+                if(charSearch.isNotEmpty()){
+                    usersFilteredList = items
+                } else{
+                    val resultList = items.filter {
+                        it.fullName.lowercase().contains(charSearch.lowercase())
+                    }
+                    usersFilteredList = resultList as MutableList<User>
+                }
+                val filterResult = FilterResults()
+                filterResult.values = usersFilteredList
+                return filterResult
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                usersFilteredList = results?.values as MutableList<User>
+                notifyDataSetChanged()
+            }
+
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val  itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_user,parent,false)
         return  ViewHolder(itemView)
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = usersFilteredList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val user = items[position]
+        val user = usersFilteredList[position]
         holder.bind(user)
     }
 
@@ -47,4 +75,6 @@ class UserRecyclerAdapter : RecyclerView.Adapter<UserRecyclerAdapter.ViewHolder>
             tvShortName.text = user.fullName[0].toString()
         }
     }
+
+
 }
